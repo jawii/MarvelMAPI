@@ -15,6 +15,8 @@
 		31BF345E20A620F800844FF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BF345D20A620F800844FF5 /* main.m */; };
 		31BF346A20A6AFF900844FF5 /* HeroesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BF346920A6AFF900844FF5 /* HeroesCollectionViewController.m */; };
 		31BF347020A6BAC500844FF5 /* MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BF346F20A6BAC500844FF5 /* MD5.m */; };
+		31BF347320A6C72400844FF5 /* HeroCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BF347220A6C72400844FF5 /* HeroCollectionCell.m */; };
+		31BF347620A6CEE000844FF5 /* Hero.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BF347520A6CEE000844FF5 /* Hero.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,10 @@
 		31BF346920A6AFF900844FF5 /* HeroesCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeroesCollectionViewController.m; sourceTree = "<group>"; };
 		31BF346E20A6BAC500844FF5 /* MD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MD5.h; sourceTree = "<group>"; };
 		31BF346F20A6BAC500844FF5 /* MD5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MD5.m; sourceTree = "<group>"; };
+		31BF347120A6C72400844FF5 /* HeroCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeroCollectionCell.h; sourceTree = "<group>"; };
+		31BF347220A6C72400844FF5 /* HeroCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeroCollectionCell.m; sourceTree = "<group>"; };
+		31BF347420A6CEE000844FF5 /* Hero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hero.h; sourceTree = "<group>"; };
+		31BF347520A6CEE000844FF5 /* Hero.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hero.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,14 +77,34 @@
 				31BF345920A620F800844FF5 /* LaunchScreen.storyboard */,
 				31BF345C20A620F800844FF5 /* Info.plist */,
 				31BF345D20A620F800844FF5 /* main.m */,
+				31BF347720A6CEF200844FF5 /* Controllers */,
+				31BF347820A6CF5E00844FF5 /* Helpers */,
+				31BF347120A6C72400844FF5 /* HeroCollectionCell.h */,
+				31BF347220A6C72400844FF5 /* HeroCollectionCell.m */,
+				31BF347420A6CEE000844FF5 /* Hero.h */,
+				31BF347520A6CEE000844FF5 /* Hero.m */,
+			);
+			path = MarvelMAPI;
+			sourceTree = "<group>";
+		};
+		31BF347720A6CEF200844FF5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				31BF345120A620F600844FF5 /* ViewController.h */,
 				31BF345220A620F600844FF5 /* ViewController.m */,
 				31BF346820A6AFF900844FF5 /* HeroesCollectionViewController.h */,
 				31BF346920A6AFF900844FF5 /* HeroesCollectionViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		31BF347820A6CF5E00844FF5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
 				31BF346E20A6BAC500844FF5 /* MD5.h */,
 				31BF346F20A6BAC500844FF5 /* MD5.m */,
 			);
-			path = MarvelMAPI;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +182,8 @@
 				31BF347020A6BAC500844FF5 /* MD5.m in Sources */,
 				31BF345E20A620F800844FF5 /* main.m in Sources */,
 				31BF345020A620F600844FF5 /* AppDelegate.m in Sources */,
+				31BF347320A6C72400844FF5 /* HeroCollectionCell.m in Sources */,
+				31BF347620A6CEE000844FF5 /* Hero.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

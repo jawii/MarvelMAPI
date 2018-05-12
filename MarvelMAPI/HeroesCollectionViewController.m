@@ -8,9 +8,12 @@
 
 #import "HeroesCollectionViewController.h"
 #import "MD5.h"
+#import "Hero.h"
+#import "ViewController.h"
+#import "HeroCollectionCell.h"
 
 @interface HeroesCollectionViewController ()
-
+@property (strong, nonatomic) NSMutableArray *heros;
 @end
 
 @implementation HeroesCollectionViewController
@@ -32,7 +35,9 @@ NSString *PRIVATE_KEY = @"9e07aab5bffd857caeb9a8762d9c7ab28ef0a019";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    
+    self.heros = [NSMutableArray array];
     
     // Do any additional setup after loading the view.
     NSURLSession *session = [NSURLSession sharedSession];
@@ -44,15 +49,32 @@ NSString *PRIVATE_KEY = @"9e07aab5bffd857caeb9a8762d9c7ab28ef0a019";
     
     NSString *myString = [NSString stringWithFormat:@"%@%@%@", timeStampObj, PRIVATE_KEY, PUBLIC_KEY];
     NSString *hash = [myString MD5];
-    NSString *urlString = [NSString stringWithFormat:@"https://gateway.marvel.com/v1/public/characters?ts=%@&apikey=beadab1530b86728a1e92107bd72d0a3&hash=%@", timeStampObj, hash];
+    NSString *urlString = [NSString stringWithFormat:@"https://gateway.marvel.com/v1/public/characters?orderBy=name&limit=50&offset=50&ts=%@&apikey=beadab1530b86728a1e92107bd72d0a3&hash=%@", timeStampObj, hash];
+
+    
+    
+    
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLSessionDownloadTask *task = [session downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         NSData *data = [[NSData alloc] initWithContentsOfURL:location];
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"response dictionary: %@", dictionary);
         
+        //NSLog(@"response dictionary: %@", dictionary);
+        NSArray *dictionaries = [[dictionary valueForKey:@"data"] valueForKey:@"results"];
+ 
+        
+        for(NSDictionary *dict in dictionaries) {
+            Hero *hero = [Hero heroWithDictionary:dict];
+            [self.heros addObject:hero];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+            NSLog(@"Reloading Collection View...");
+        });
+
     }];
     [task resume];
     
@@ -77,20 +99,22 @@ NSString *PRIVATE_KEY = @"9e07aab5bffd857caeb9a8762d9c7ab28ef0a019";
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
-    return 0;
+    return [self.heros count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    HeroCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
+    //NSLog(@"Setting up Cell");
+    Hero *hero = [self.heros objectAtIndex:indexPath.row];
+    cell.hero = hero;
+    cell.heroName.text = hero.heroName;
     
     return cell;
 }
