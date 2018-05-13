@@ -24,35 +24,27 @@ NSString *PUBLIC_KEY = @"beadab1530b86728a1e92107bd72d0a3";
 NSString *PRIVATE_KEY = @"9e07aab5bffd857caeb9a8762d9c7ab28ef0a019";
 
 
-
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
-    //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
+    self.view.backgroundColor = [UIColor blackColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.heros = [NSMutableArray array];
+    [self refreshImages];
     
-    // Do any additional setup after loading the view.
+    
+}
+
+
+-(void)refreshImages {
     NSURLSession *session = [NSURLSession sharedSession];
-    
     // TimeStamp
     NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
     NSNumber *timeStampObj = [NSNumber numberWithDouble: timeStamp];
-
+    
     
     NSString *myString = [NSString stringWithFormat:@"%@%@%@", timeStampObj, PRIVATE_KEY, PUBLIC_KEY];
     NSString *hash = [myString MD5];
-    NSString *urlString = [NSString stringWithFormat:@"https://gateway.marvel.com/v1/public/characters?orderBy=name&limit=50&offset=50&ts=%@&apikey=beadab1530b86728a1e92107bd72d0a3&hash=%@", timeStampObj, hash];
-
-    
-    
+    NSString *urlString = [NSString stringWithFormat:@"https://gateway.marvel.com/v1/public/characters?orderBy=modified&limit=50&offset=50&ts=%@&apikey=beadab1530b86728a1e92107bd72d0a3&hash=%@", timeStampObj, hash];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -63,7 +55,7 @@ NSString *PRIVATE_KEY = @"9e07aab5bffd857caeb9a8762d9c7ab28ef0a019";
         
         //NSLog(@"response dictionary: %@", dictionary);
         NSArray *dictionaries = [[dictionary valueForKey:@"data"] valueForKey:@"results"];
- 
+        
         
         for(NSDictionary *dict in dictionaries) {
             Hero *hero = [Hero heroWithDictionary:dict];
@@ -74,11 +66,9 @@ NSString *PRIVATE_KEY = @"9e07aab5bffd857caeb9a8762d9c7ab28ef0a019";
             [self.collectionView reloadData];
             NSLog(@"Reloading Collection View...");
         });
-
+        
     }];
     [task resume];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
